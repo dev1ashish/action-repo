@@ -1,1 +1,13 @@
+# .github/workflows/merge.yml
+name: Merge Event
+on:
+  pull_request:
+    types: [closed]
+jobs:
+  notify:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Merge Event
+        run: curl -X POST -H "Content-Type: application/json" -d '{"event_type": "merge", "author": "${{ github.actor }}", "from_branch": "${{ github.event.pull_request.head.ref }}", "to_branch": "${{ github.event.pull_request.base.ref }}", "timestamp": "${{ github.event.pull_request.merged_at }}"}' https://your-webhook-endpoint
 
