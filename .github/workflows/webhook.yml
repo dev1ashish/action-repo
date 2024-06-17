@@ -1,0 +1,20 @@
+name: Trigger Webhooks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, closed, merged]
+
+jobs:
+  send-webhook:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send webhook
+      run: |
+        curl -X POST -H "Content-Type: application/json" \
+        -H "X-GitHub-Event: ${{ github.event_name }}" \
+        -d '${{ toJson(github.event) }}' \
+        https://your-webhook-url
