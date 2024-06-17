@@ -1,1 +1,10 @@
+# .github/workflows/pull_request.yml
+name: Pull Request Event
+on: pull_request
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Pull Request Event
+        run: curl -X POST -H "Content-Type: application/json" -d '{"event_type": "pull_request", "author": "${{ github.actor }}", "from_branch": "${{ github.event.pull_request.head.ref }}", "to_branch": "${{ github.event.pull_request.base.ref }}", "timestamp": "${{ github.event.pull_request.updated_at }}"}' https://apna-webhook-endpoint
 
