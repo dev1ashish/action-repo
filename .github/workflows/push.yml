@@ -1,1 +1,10 @@
+# .github/workflows/push.yml
+name: Push Event
+on: push
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Push Event
+        run: curl -X POST -H "Content-Type: application/json" -d '{"event_type": "push", "author": "${{ github.actor }}", "branch": "${{ github.ref_name }}", "timestamp": "${{ github.event.head_commit.timestamp }}"}' https://apna-webhook-endpoint
 
